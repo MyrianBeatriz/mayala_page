@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Myri • Notes on Life, Travel, Hacking & Money</title>
+  <meta name="description" content="Personal notes and posts on traveling, hacking, financial literacy, and relationships." />
+  <style>
+    :root{
+      --bg:#0b0c0f; --card:#11131a; --muted:#7f8ba3; --text:#eaf0ff; --accent:#7c9cff; --accent-2:#88e0c5;
+      --ring: 0 0 0 2px var(--accent);
+    }
+    :root.light{
+      --bg:#f7f9fc; --card:#ffffff; --muted:#4f5b73; --text:#0b0c0f; --accent:#355cff; --accent-2:#0ea5e9;
+    }
+    *{box-sizing:border-box}
+    html,body{height:100%}
+    body{
+      margin:0; font:16px/1.6 system-ui,-apple-system,Segoe UI,Roboto,Inter,Helvetica,Arial,sans-serif;
+      background: radial-gradient(1200px 800px at 10% -10%, rgba(124,156,255,.08), transparent),
+                  radial-gradient(900px 600px at 110% 10%, rgba(136,224,197,.10), transparent),
+                  var(--bg);
+      color:var(--text);
+    }
+    .container{max-width:960px;margin:0 auto;padding:28px}
+    header{
+      position:sticky; top:0; backdrop-filter:saturate(140%) blur(8px);
+      background:linear-gradient(to bottom, rgba(0,0,0,.35), transparent);
+      padding:12px 0; z-index:10; border-bottom:1px solid rgba(255,255,255,.05)
+    }
+    .nav{display:flex;align-items:center;gap:16px}
+    .brand{font-weight:700;letter-spacing:.3px}
+    .spacer{flex:1}
+    .btn, .chip, .link{border:1px solid rgba(255,255,255,.12); color:var(--text)}
+    .btn{padding:8px 12px;border-radius:12px;background:var(--card);cursor:pointer}
+    .btn:focus{outline:var(--ring)}
+    .chip{padding:6px 10px;border-radius:999px;font-size:.85rem;background:linear-gradient(180deg, rgba(255,255,255,.05), rgba(0,0,0,.05))}
+    .link{padding:6px 10px;border-radius:10px;text-decoration:none;display:inline-flex;align-items:center;gap:8px;background:var(--card)}
+    .grid{display:grid;grid-template-columns:1.2fr .8fr;gap:24px}
+    @media (max-width:860px){.grid{grid-template-columns:1fr}}
+
+    .card{background:linear-gradient(180deg, rgba(255,255,255,.04), rgba(0,0,0,.06));
+      border:1px solid rgba(255,255,255,.08); border-radius:18px; padding:20px; box-shadow:0 6px 18px rgba(0,0,0,.25)}
+    .card h2{margin:0 0 10px 0}
+    .muted{color:var(--muted)}
+    .hero{display:flex;align-items:center;gap:16px}
+    .avatar{width:56px;height:56px;border-radius:14px;background:linear-gradient(135deg,var(--accent),var(--accent-2));display:grid;place-items:center;color:white;font-weight:800}
+    .tags{display:flex;flex-wrap:wrap;gap:10px}
+
+    .post{padding:18px;border-radius:16px;border:1px solid rgba(255,255,255,.08); background:var(--card)}
+    .post h3{margin:0 0 6px 0}
+    .post .meta{font-size:.9rem;color:var(--muted);display:flex;gap:12px;align-items:center}
+
+    .list{display:grid;gap:14px}
+    .kicker{color:var(--accent);font-weight:700;text-transform:uppercase;letter-spacing:.12em;font-size:.8rem}
+    .footer{margin:32px 0 12px;color:var(--muted);font-size:.9rem}
+    .filter{display:flex;gap:10px;flex-wrap:wrap}
+    .filter button{all:unset;cursor:pointer;padding:6px 10px;border-radius:999px;border:1px solid rgba(255,255,255,.12);}
+    .filter button.active{background:var(--accent);color:white;border-color:transparent}
+    code{background:rgba(255,255,255,.06);padding:2px 6px;border-radius:6px}
+  </style>
+</head>
+<body>
+  <header>
+    <div class="container nav">
+      <div class="brand">🦥 Myri / Notes</div>
+      <nav class="spacer filter" id="filterBar" aria-label="Category filter">
+        <button data-filter="all" class="active">All</button>
+        <button data-filter="Traveling">Traveling</button>
+        <button data-filter="Hacking">Hacking</button>
+        <button data-filter="Financial Literacy">Financial Literacy</button>
+        <button data-filter="Relationships">Relationships</button>
+      </nav>
+      <button class="btn" id="modeBtn" title="Toggle theme">☀️/🌙</button>
+    </div>
+  </header>
+
+  <main class="container grid" id="app">
+    <section class="card">
+      <div class="hero">
+        <div class="avatar">MY</div>
+        <div>
+          <div class="kicker">Welcome</div>
+          <h1 style="margin:.2rem 0 0 0">Documenting the journey</h1>
+          <p class="muted">Stories, notes, and experiments on <strong>traveling</strong>, <strong>hacking</strong>, <strong>financial literacy</strong>, and <strong>relationships</strong>. Built with simple HTML + a dash of JS.</p>
+        </div>
+      </div>
+      <div style="height:12px"></div>
+      <div class="tags">
+        <span class="chip">NYC ✨</span>
+        <span class="chip">Cybersecurity 🛡️</span>
+        <span class="chip">First‑Gen 📚</span>
+      </div>
+    </section>
+
+    <aside class="card">
+      <h2>About</h2>
+      <p>Hi, I'm <strong>Myri</strong> — a curious human who loves building, breaking (ethically), learning about money, and nurturing good relationships. This site is my living notebook. 💚</p>
+      <div style="height:8px"></div>
+      <a class="link" href="#" onclick="alert('Connect: add your links!')">↗ Connect • LinkedIn / GitHub / Email</a>
+    </aside>
+
+    <section class="card" style="grid-column:1 / -1">
+      <div class="kicker">Latest</div>
+      <h2 style="margin:.2rem 0 1rem 0">Posts</h2>
+      <div class="list" id="postList"></div>
+    </section>
+
+    <section class="card">
+      <h2>Now</h2>
+      <p class="muted">What I'm focused on this week.</p>
+      <ul>
+        <li>Learning: <strong>Active Directory pentesting</strong> & web app testing playbook</li>
+        <li>Money: bi‑weekly budget & <em>Fortaleza</em> savings</li>
+        <li>Health: 5K runs + meal prep</li>
+      </ul>
+    </section>
+
+    <section class="card">
+      <h2>Topics</h2>
+      <p class="muted">Browse by theme</p>
+      <div class="tags">
+        <span class="chip">Travel itineraries</span>
+        <span class="chip">Cheat‑sheets</span>
+        <span class="chip">Budgeting</span>
+        <span class="chip">Reflections</span>
+      </div>
+    </section>
+
+  </main>
+
+  <footer class="container footer">© <span id="year"></span> Myri. Built with love and HTML. RSS soon.</footer>
+
+  <script>
+    // --- Content model (simple JSON you can edit) ---
+    const posts = [
+      {
+        title: "First post: hello internet 👋",
+        date: "2025-10-08",
+        category: "Relationships",
+        summary: "Kicking off a small corner of the web to think in public.",
+        href: "#"
+      },
+      {
+        title: "nmap notes: SYN scan & service discovery",
+        date: "2025-10-05",
+        category: "Hacking",
+        summary: "A concise guide to -sS, -sV, timing, and safe defaults for scoped testing.",
+        href: "#"
+      },
+      {
+        title: "6‑month budget template (bi‑weekly)",
+        date: "2025-09-30",
+        category: "Financial Literacy",
+        summary: "My spreadsheet for rent, savings (10%), and sinking funds.",
+        href: "#"
+      },
+      {
+        title: "48 hours in San Francisco",
+        date: "2025-10-03",
+        category: "Traveling",
+        summary: "Bartlett St. base—coffee, hills, and sunset lines on the bay.",
+        href: "#"
+      }
+    ];
+
+    // --- Render posts ---
+    const list = document.getElementById('postList');
+    function render(filter = 'all'){
+      list.innerHTML = '';
+      posts
+        .filter(p => filter==='all' ? true : p.category === filter)
+        .sort((a,b)=> new Date(b.date) - new Date(a.date))
+        .forEach(p => {
+          const el = document.createElement('article');
+          el.className = 'post';
+          el.setAttribute('data-category', p.category);
+          el.innerHTML = `
+            <h3><a class="link" href="${p.href}">${p.title}</a></h3>
+            <div class="meta"><span>${new Date(p.date).toLocaleDateString()}</span> • <span>${p.category}</span></div>
+            <p class="muted">${p.summary}</p>
+          `;
+          list.appendChild(el);
+        });
+    }
+
+    // --- Filter bar ---
+    const filterBar = document.getElementById('filterBar');
+    filterBar.addEventListener('click', (e)=>{
+      if(e.target.tagName !== 'BUTTON') return;
+      for(const b of filterBar.querySelectorAll('button')) b.classList.remove('active');
+      e.target.classList.add('active');
+      render(e.target.dataset.filter);
+    });
+
+    // --- Theme toggle ---
+    const modeBtn = document.getElementById('modeBtn');
+    function setMode(mode){
+      if(mode==='light'){ document.documentElement.classList.add('light'); }
+      else{ document.documentElement.classList.remove('light'); }
+      localStorage.setItem('mode', mode);
+      modeBtn.textContent = mode==='light' ? '🌙' : '☀️';
+    }
+    modeBtn.addEventListener('click', ()=>{
+      const current = localStorage.getItem('mode') || 'dark';
+      setMode(current==='dark' ? 'light' : 'dark');
+    });
+    setMode(localStorage.getItem('mode') || (window.matchMedia('(prefers-color-scheme: light)').matches ? 'light':'dark'));
+
+    // --- Misc ---
+    document.getElementById('year').textContent = new Date().getFullYear();
+    render();
+  </script>
+</body>
+</html>
