@@ -88,7 +88,7 @@
       border-radius:999px;
       cursor:pointer;
     }
-    .filter button.active{
+    .filter > button.active{
       background:linear-gradient(180deg, var(--accent), var(--accent-2));
       color:#0b110e; border-color:transparent
     }
@@ -99,6 +99,7 @@
 <header>
   <div class="container nav">
     <div class="brand" data-i18n="brand">🦥 SlothSec Log - myrian.ayala</div>
+
     <nav class="spacer filter" id="filterBar" aria-label="Category filter" data-i18n="filter.aria" data-i18n-attr="aria-label">
       <!-- keep data-filter values stable (EN) so filtering logic works regardless of UI language -->
       <button data-filter="all" class="active" data-i18n="filter.all">All</button>
@@ -107,6 +108,8 @@
       <button data-filter="Financial Literacy" data-i18n="filter.finance">Financial Literacy</button>
       <button data-filter="Relationships" data-i18n="filter.health">Overall Health</button>
     </nav>
+
+    <!-- real buttons live OUTSIDE the .filter nav -->
     <button class="btn" id="modeBtn" title="Toggle theme">☀️/🌙</button>
     <button class="btn" id="langBtn" title="Cambiar idioma">EN</button>
   </div>
@@ -239,14 +242,14 @@
       "filter.aria": "Filtro de categorías",
       "filter.all": "Todo",
       "filter.travel": "Viajes",
-      "filter.hacking": "Seguridad Ofensiva",
+      "filter.hacking": "Seguridad / Infosec",
       "filter.finance": "Educación financiera",
       "filter.health": "Bienestar integral",
       "welcome.kicker": "Bienvenid@",
-      "welcome.title": "Haciendo debug a la vida",
-      "welcome.tagline": "Una colección de notas sobre la <strong>vida</strong>, <strong>hackeo ético</strong>, <strong>viajes</strong> y todo lo demás. Hecho con curiosidad, tereré y un poco de código.",
+      "welcome.title": "Depurando la vida",
+      "welcome.tagline": "Una colección de notas sobre la <strong>vida</strong>, <strong>hacking ético</strong>, <strong>viajes</strong> y todo lo demás. Hecho con curiosidad, tereré y un poco de código.",
       "about.title": "Sobre mí",
-      "about.body": "¡Hola! Soy <strong>Myrian</strong>: una exploradora curiosa que ama viajar, aprender de las historias de las personas, romper cosas (de forma ética) y buscar la libertad en todas sus formas.  Me llamó la atención el concepto \"pronoia\": la creencia de que el universo conspira a nuestro favor y entonces decidí adoptarlo como forma de ver la vida. Ojalá mis notas te inspiren algo bueno. ¡Gracias por visitar!",
+      "about.body": "¡Hola! Soy <strong>Myrian</strong>: una exploradora curiosa a quien le encanta viajar, aprender de las historias de las personas, romper cosas (de forma ética) y buscar libertad en todas sus formas. Veo la vida con pronoia — confiando en la bondad del universo. Ojalá mis notas te inspiren algo bueno. ¡Gracias por visitar!",
       "about.cta": "↗ Conectar en LinkedIn",
       "latest.kicker": "Lo último",
       "latest.title": "Publicaciones",
@@ -339,8 +342,8 @@
     localStorage.setItem('lang', currentLang);
     document.documentElement.lang = currentLang;
 
-    // Replace text in elements with data-i18n
-    document.querySelectorAll('[data-i18n]').forEach(el => {
+    // Replace text in elements with data-i18n (skip elements that ONLY set attributes)
+    document.querySelectorAll('[data-i18n]:not([data-i18n-attr])').forEach(el => {
       const key = el.getAttribute('data-i18n');
       const val = (dict[currentLang] && dict[currentLang][key]) || (dict.en[key]) || '';
       if (val.includes('<') || val.includes('&')) el.innerHTML = val;
@@ -349,7 +352,7 @@
 
     // Replace attributes via data-i18n-attr
     document.querySelectorAll('[data-i18n-attr]').forEach(el => {
-      const attrName = el.getAttribute('data-i18n-attr');
+      const attrName = el.getAttribute('data-i18n-attr'); // e.g., "aria-label" or "title"
       const key = el.getAttribute('data-i18n');
       const val = (dict[currentLang] && dict[currentLang][key]) || (dict.en[key]) || '';
       el.setAttribute(attrName, val);
@@ -371,5 +374,6 @@
 </script>
 </body>
 </html>
+
 
 
