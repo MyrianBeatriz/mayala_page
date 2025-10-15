@@ -1,35 +1,141 @@
-<!DOCTYPE html><html lang="en"><head>
-<meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
-<title>> echo "Hello, world!" — and welcome! 👋</title>
-<meta name="description" content="First post on Myrian's personal site.">
-<style>
-  body{margin:0;font:16px/1.6 system-ui,-apple-system,Segoe UI,Inter,Roboto,Arial,sans-serif;background:#0b0c0f;color:#eaf0ff}
-  .wrap{max-width:760px;margin:0 auto;padding:28px}
-  a{color:#7c9cff}.card{background:linear-gradient(180deg, rgba(255,255,255,.04), rgba(0,0,0,.06));border:1px solid rgba(255,255,255,.08);border-radius:18px;padding:24px}
-  .muted{color:#7f8ba3}.back{display:inline-block;margin:16px 0}
-</style></head><body>
-<main class="wrap">
-  <a class="back" href="../index.html">← Back to all posts</a>
-  <article class="card">
-    <h1>> echo "Hello, world!" — and welcome! 👋</h1>
-    <p class="muted">Published: 2025-10-12 • Category: Off the Records</p>
-    <p>
-      Hi there! I’m Myrian, and I’m really glad you found your way here. <br>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>> echo "Hello, world!" — and welcome! 👋</title>
+  <meta name="description" content="First post on Myrian's personal site." />
+  <style>
+    /* --- Sloth Forest theme variables --- */
+    :root{
+      /* dark */
+      --bg:#0b110e;         /* deep jungle */
+      --card:#0f1612;       /* dark canopy */
+      --muted:#8aa397;      /* sage */
+      --text:#ecf4ee;       /* misty fern */
+      --accent:#10b981;     /* emerald */
+      --accent-2:#a3e635;   /* lime leaf */
+      --ring: 0 0 0 2px var(--accent);
+      --border: rgba(255,255,255,.08);
+      --glass-top: rgba(22,163,74,.25);
+    }
+    :root.light{
+      /* light */
+      --bg:#f3f7f4;         /* soft moss */
+      --card:#ffffff;       /* white card */
+      --muted:#3f5d51;      /* deeper sage */
+      --text:#0b110e;       /* deep jungle text */
+      --accent:#16a34a;     /* green 600 */
+      --accent-2:#34d399;   /* emerald 400 */
+      --border: rgba(0,0,0,.08);
+      --glass-top: rgba(22,163,74,.12);
+    }
 
-      This space started as a small experiment — part journal, part digital lab — where I can share notes, ideas, and lessons from the things I love most: cybersecurity, travel, financial freedom, human connection, and the art of living curiously.<br>
-      <br>
-      I’ve always believed that the best way to learn is to explore, break things (ethically 😉), and rebuild them with a better understanding. Over time, I realized I wanted a place to document that process — the wins, the mistakes, the insights, and the random sparks that happen along the way.
-      <br><br>
+    *{box-sizing:border-box}
+    html,body{height:100%}
+    body{
+      margin:0; font:16px/1.6 system-ui,-apple-system,Segoe UI,Roboto,Inter,Helvetica,Arial,sans-serif;
+      background:
+              radial-gradient(1200px 800px at 10% -10%, rgba(16,185,129,.10), transparent),
+              radial-gradient(900px 600px at 110% 10%, rgba(163,230,53,.10), transparent),
+              var(--bg);
+      color:var(--text);
+    }
+
+    /* Header (optional for consistency) */
+    header{
+      position:sticky; top:0; backdrop-filter:saturate(140%) blur(8px);
+      background:linear-gradient(to bottom, var(--glass-top), transparent);
+      padding:12px 0; z-index:10; border-bottom:1px solid var(--border)
+    }
+    .container{max-width:860px;margin:0 auto;padding:20px 28px}
+    .nav{display:flex;align-items:center;gap:16px}
+    .brand{font-weight:700;letter-spacing:.3px}
+    .spacer{flex:1}
+    .btn{border:1px solid var(--border); color:var(--text); background:var(--card);
+      padding:8px 12px;border-radius:12px;cursor:pointer}
+    .btn:focus{outline:var(--ring)}
+
+    /* Content */
+    .wrap{max-width:760px;margin:0 auto;padding:28px}
+    a{color:var(--accent); text-underline-offset:3px}
+    .back{display:inline-flex;align-items:center;gap:8px;margin:16px 0; text-decoration:none; padding:6px 8px;
+      border:1px solid var(--border); border-radius:10px; background:var(--card)}
+    .back:hover{filter:saturate(120%)}
+    .card{
+      background:linear-gradient(180deg, rgba(255,255,255,.04), rgba(0,0,0,.06));
+      border:1px solid var(--border); border-radius:18px; padding:24px; box-shadow:0 6px 18px rgba(0,0,0,.25)
+    }
+    .muted{color:var(--muted)}
+    .post-title{margin:0 0 10px 0; line-height:1.2}
+    hr{border:none;border-top:1px solid var(--border); margin:24px 0}
+
+    footer{color:var(--muted); font-size:.9rem; padding:24px 28px}
+    code{background:rgba(255,255,255,.06);padding:2px 6px;border-radius:6px}
+  </style>
+</head>
+<body>
+<!-- Consistent header + theme toggle -->
+<header>
+  <div class="container nav">
+    <div class="brand">🦥 SlothSec Log - myrian.ayala</div>
+    <div class="spacer"></div>
+    <button class="btn" id="modeBtn" title="Toggle theme">☀️/🌙</button>
+  </div>
+</header>
+
+<main class="wrap" id="app">
+  <a class="back" href="../index.html">← Back to all posts</a>
+
+  <article class="card">
+    <h1 class="post-title">> echo "Hello, world!" — and welcome! 👋</h1>
+    <p class="muted">Published: 2025-10-12 • Category: Off the Records</p>
+    <hr />
+    <p>
+      Hi there! I’m Myrian, and I’m really glad you found your way here. <br><br>
+      This space started as a small experiment — part journal, part digital lab — where I can share notes, ideas,
+      and lessons from the things I love most: cybersecurity, travel, financial freedom, human connection, and the
+      art of living curiously.<br><br>
+      I’ve always believed that the best way to learn is to explore, break things (ethically 😉),
+      and rebuild them with a better understanding. Over time, I realized I wanted a place to document that process —
+      the wins, the mistakes, the insights, and the random sparks that happen along the way.
+    </p>
+    <p>
       <strong>So that’s what this page is about:</strong><br>
       ✨ Stories from the road and from the command line.<br>
       🧠 Notes on mindset, growth, and balance.<br>
       💻 Experiments in hacking, building, and creating.<br>
-
+    </p>
+    <p>
       If something here makes you think, laugh, or learn something new — that’s the goal.<br><br>
-
-      Thanks for reading — and welcome to this evolving journey. Grab a coffee (or a mate 🧉) and explore a bit.
+      Thanks for reading — and welcome to this evolving journey.
+      Grab a coffee (or a mate 🧉) and explore a bit.
     </p>
   </article>
 </main>
-</body></html>
+
+<footer class="container">
+  © <span id="year"></span> Myrian Ayala. Built with love.
+</footer>
+
+<script>
+  // Theme toggle (keeps in sync with index via localStorage)
+  const modeBtn = document.getElementById('modeBtn');
+  function setMode(mode){
+    if(mode==='light'){ document.documentElement.classList.add('light'); }
+    else{ document.documentElement.classList.remove('light'); }
+    localStorage.setItem('mode', mode);
+    modeBtn.textContent = mode==='light' ? '🌙' : '☀️';
+  }
+  modeBtn.addEventListener('click', ()=>{
+    const current = localStorage.getItem('mode') || 'dark';
+    setMode(current==='dark' ? 'light' : 'dark');
+  });
+  setMode(localStorage.getItem('mode') || (window.matchMedia('(prefers-color-scheme: light)').matches ? 'light':'dark'));
+
+  // Year
+  document.getElementById('year').textContent = new Date().getFullYear();
+</script>
+</body>
+</html>
 
