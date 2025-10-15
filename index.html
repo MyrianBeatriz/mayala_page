@@ -78,7 +78,16 @@
     .kicker{color:var(--accent);font-weight:700;text-transform:uppercase;letter-spacing:.12em;font-size:.8rem}
     .footer{margin:32px 0 12px;color:var(--muted);font-size:.9rem}
     .filter{display:flex;gap:10px;flex-wrap:wrap}
-    .filter button{all:unset;cursor:pointer;padding:6px 10px;border-radius:999px;border:1px solid var(--border);}
+    .filter > button{
+      appearance: none;
+      border:1px solid var(--border);
+      background: transparent;
+      color: inherit;
+      font: inherit;
+      padding:6px 10px;
+      border-radius:999px;
+      cursor:pointer;
+    }
     .filter button.active{
       background:linear-gradient(180deg, var(--accent), var(--accent-2));
       color:#0b110e; border-color:transparent
@@ -230,12 +239,12 @@
       "filter.aria": "Filtro de categorías",
       "filter.all": "Todo",
       "filter.travel": "Viajes",
-      "filter.hacking": "Seguridad / Infosec",
+      "filter.hacking": "Seguridad Ofensiva",
       "filter.finance": "Educación financiera",
       "filter.health": "Bienestar integral",
       "welcome.kicker": "Bienvenid@",
-      "welcome.title": "Depurando la vida",
-      "welcome.tagline": "Una colección de notas sobre la <strong>vida</strong>, <strong>hacking ético</strong>, <strong>viajes</strong> y todo lo demás. Hecho con curiosidad, tereré y un poco de código.",
+      "welcome.title": "Haciendo debug a la vida",
+      "welcome.tagline": "Una colección de notas sobre la <strong>vida</strong>, <strong>hackeo ético</strong>, <strong>viajes</strong> y todo lo demás. Hecho con curiosidad, tereré y un poco de código.",
       "about.title": "Sobre mí",
       "about.body": "¡Hola! Soy <strong>Myrian</strong>: una exploradora curiosa a quien le encanta viajar, aprender de las historias de las personas, romper cosas (de forma ética) y buscar libertad en todas sus formas. Veo la vida con pronoia — confiando en la bondad del universo. Ojalá mis notas te inspiren algo bueno. ¡Gracias por visitar!",
       "about.cta": "↗ Conectar en LinkedIn",
