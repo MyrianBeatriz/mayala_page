@@ -1,3 +1,6 @@
+Absolutely—here’s your page with the “sloth-forest” green theme baked in (dark + light modes kept intact). You can paste this whole file over your current one:
+
+```html
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -7,26 +10,40 @@
   <meta name="description" content="Personal notes and posts on traveling, hacking, financial literacy, health and relationships." />
   <style>
     :root{
-      --bg:#0b0c0f; --card:#11131a; --muted:#7f8ba3; --text:#eaf0ff; --accent:#7c9cff; --accent-2:#88e0c5;
+      /* Sloth Forest — dark theme */
+      --bg:#0b110e;         /* deep jungle */
+      --card:#0f1612;       /* dark canopy */
+      --muted:#8aa397;      /* sage */
+      --text:#ecf4ee;       /* misty fern */
+      --accent:#10b981;     /* emerald */
+      --accent-2:#a3e635;   /* lime leaf */
       --ring: 0 0 0 2px var(--accent);
     }
     :root.light{
-      --bg:#f7f9fc; --card:#ffffff; --muted:#4f5b73; --text:#0b0c0f; --accent:#355cff; --accent-2:#0ea5e9;
+      /* Sloth Forest — light theme */
+      --bg:#f3f7f4;         /* soft moss */
+      --card:#ffffff;       /* white card */
+      --muted:#3f5d51;      /* deeper sage */
+      --text:#0b110e;       /* deep jungle text */
+      --accent:#16a34a;     /* green 600 */
+      --accent-2:#34d399;   /* emerald 400 */
     }
+
     *{box-sizing:border-box}
     html,body{height:100%}
     body{
       margin:0; font:16px/1.6 system-ui,-apple-system,Segoe UI,Roboto,Inter,Helvetica,Arial,sans-serif;
-      background: radial-gradient(1200px 800px at 10% -10%, rgba(124,156,255,.08), transparent),
-                  radial-gradient(900px 600px at 110% 10%, rgba(136,224,197,.10), transparent),
-                  var(--bg);
+      background:
+        radial-gradient(1200px 800px at 10% -10%, rgba(16,185,129,.10), transparent), /* emerald */
+        radial-gradient(900px 600px at 110% 10%, rgba(163,230,53,.10), transparent),  /* lime */
+        var(--bg);
       color:var(--text);
     }
     .container{max-width:960px;margin:0 auto;padding:28px}
     header{
       position:sticky; top:0; backdrop-filter:saturate(140%) blur(8px);
-      background:linear-gradient(to bottom, rgba(0,0,0,.35), transparent);
-      padding:12px 0; z-index:10; border-bottom:1px solid rgba(255,255,255,.05)
+      background:linear-gradient(to bottom, rgba(22,163,74,.25), transparent);
+      padding:12px 0; z-index:10; border-bottom:1px solid rgba(255,255,255,.06)
     }
     .nav{display:flex;align-items:center;gap:16px}
     .brand{font-weight:700;letter-spacing:.3px}
@@ -44,7 +61,11 @@
     .card h2{margin:0 0 10px 0}
     .muted{color:var(--muted)}
     .hero{display:flex;align-items:center;gap:16px}
-    .avatar{width:56px;height:56px;border-radius:14px;background:linear-gradient(135deg,var(--accent),var(--accent-2));display:grid;place-items:center;color:white;font-weight:800}
+    .avatar{
+      width:56px;height:56px;border-radius:14px;
+      background:linear-gradient(135deg,var(--accent),var(--accent-2));
+      display:grid;place-items:center;color:white;font-weight:800
+    }
     .tags{display:flex;flex-wrap:wrap;gap:10px}
 
     .post{padding:18px;border-radius:16px;border:1px solid rgba(255,255,255,.08); background:var(--card)}
@@ -56,7 +77,10 @@
     .footer{margin:32px 0 12px;color:var(--muted);font-size:.9rem}
     .filter{display:flex;gap:10px;flex-wrap:wrap}
     .filter button{all:unset;cursor:pointer;padding:6px 10px;border-radius:999px;border:1px solid rgba(255,255,255,.12);}
-    .filter button.active{background:var(--accent);color:white;border-color:transparent}
+    .filter button.active{
+      background:linear-gradient(180deg, var(--accent), var(--accent-2));
+      color:#0b110e; border-color:transparent
+    }
     code{background:rgba(255,255,255,.06);padding:2px 6px;border-radius:6px}
   </style>
 </head>
@@ -125,7 +149,7 @@
         <span class="chip">Coming soon…</span>
         <!--
         <a href="https://http1mustdie.com/"> Understanding HTTP Request Smuggling Vulnerability.</a>
-         <span class="chip">Cheat‑sheets</span>
+         <span class="chip">Cheat-sheets</span>
         <span class="chip">Budgeting</span>
         <span class="chip">Reflections</span>
       </div> -->
@@ -138,37 +162,37 @@
   <script>
     // --- Content model (simple JSON you can edit) ---
     const posts = [
-    {
-      title: "> echo \"Hello, world!\" — and welcome! 👋",
-      date: "2025-10-12",
-      category: "Relationships & Overall Health",
-      summary: "Launching a space to think out loud — where code meets curiosity, and lessons from the digital and human world intersect.",
-      href: "posts/hello-internet.html"
-    }
-            /*
-    {
-      title: "nmap notes: SYN scan & service discovery",
-      date: "2025-10-05",
-      category: "Hacking",
-      summary: "A concise guide to -sS, -sV, timing, and safe defaults for scoped testing.",
-      href: "posts/nmap-syn-scan-notes.html"
-    },
-    {
-      title: "6-month budget template (bi-weekly)",
-      date: "2025-09-30",
-      category: "Financial Literacy",
-      summary: "My spreadsheet for rent, savings (10%), and sinking funds.",
-      href: "posts/biweekly-budget-template.html"
-    },
-    {
-      title: "48 hours in San Francisco",
-      date: "2025-10-03",
-      category: "Traveling",
-      summary: "Bartlett St. base—coffee, hills, and sunset lines on the bay.",
-      href: "posts/48-hours-san-francisco.html"
-    }
-    */
-  ];
+      {
+        title: "> echo \"Hello, world!\" — and welcome! 👋",
+        date: "2025-10-12",
+        category: "Relationships & Overall Health",
+        summary: "Launching a space to think out loud — where code meets curiosity, and lessons from the digital and human world intersect.",
+        href: "posts/hello-internet.html"
+      }
+      /*
+      ,{
+        title: "nmap notes: SYN scan & service discovery",
+        date: "2025-10-05",
+        category: "Hacking",
+        summary: "A concise guide to -sS, -sV, timing, and safe defaults for scoped testing.",
+        href: "posts/nmap-syn-scan-notes.html"
+      },
+      {
+        title: "6-month budget template (bi-weekly)",
+        date: "2025-09-30",
+        category: "Financial Literacy",
+        summary: "My spreadsheet for rent, savings (10%), and sinking funds.",
+        href: "posts/biweekly-budget-template.html"
+      },
+      {
+        title: "48 hours in San Francisco",
+        date: "2025-10-03",
+        category: "Traveling",
+        summary: "Bartlett St. base—coffee, hills, and sunset lines on the bay.",
+        href: "posts/48-hours-san-francisco.html"
+      }
+      */
+    ];
 
     // --- Render posts ---
     const list = document.getElementById('postList');
@@ -219,3 +243,5 @@
   </script>
 </body>
 </html>
+```
+
