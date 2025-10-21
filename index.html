@@ -9,60 +9,136 @@
     /* --- Sloth Forest theme variables --- */
     :root{
       /* dark */
-      --bg:#0b110e;         /* deep jungle */
-      --card:#0f1612;       /* dark canopy */
-      --muted:#8aa397;      /* sage */
-      --text:#ecf4ee;       /* misty fern */
-      --accent:#10b981;     /* emerald */
-      --accent-2:#a3e635;   /* lime leaf */
+      --bg:#0b110e;
+      --card:#0f1612;
+      --muted:#8aa397;
+      --text:#ecf4ee;
+      --accent:#10b981;
+      --accent-2:#a3e635;
       --ring: 0 0 0 2px var(--accent);
       --border: rgba(255,255,255,.08);
       --glass-top: rgba(22,163,74,.25);
+
+      /* layout scale */
+      --space-1: clamp(6px, 1.2vw, 10px);
+      --space-2: clamp(10px, 1.8vw, 14px);
+      --space-3: clamp(14px, 2.4vw, 18px);
+      --space-4: clamp(20px, 3vw, 24px);
+      --radius: 18px;
+
+      /* type scale */
+      --fs-0: clamp(14px, 1.6vw, 15px);
+      --fs-1: clamp(16px, 2vw, 18px);
+      --fs-2: clamp(18px, 2.4vw, 22px);
+      --fs-3: clamp(22px, 3vw, 28px);
     }
     :root.light{
       /* light */
-      --bg:#f3f7f4;         /* soft moss */
-      --card:#ffffff;       /* white card */
-      --muted:#3f5d51;      /* deeper sage */
-      --text:#0b110e;       /* deep jungle text */
-      --accent:#16a34a;     /* green 600 */
-      --accent-2:#34d399;   /* emerald 400 */
+      --bg:#f3f7f4;
+      --card:#ffffff;
+      --muted:#3f5d51;
+      --text:#0b110e;
+      --accent:#16a34a;
+      --accent-2:#34d399;
       --border: rgba(0,0,0,.08);
       --glass-top: rgba(22,163,74,.12);
     }
 
     *{box-sizing:border-box}
     html,body{height:100%}
+    html{color-scheme:dark light}
     body{
-      margin:0; font:16px/1.6 system-ui,-apple-system,Segoe UI,Roboto,Inter,Helvetica,Arial,sans-serif;
+      margin:0;
+      font: var(--fs-1)/1.6 system-ui,-apple-system,Segoe UI,Roboto,Inter,Helvetica,Arial,sans-serif;
       background:
-              radial-gradient(1200px 800px at 10% -10%, rgba(16,185,129,.10), transparent), /* emerald glow */
-              radial-gradient(900px 600px at 110% 10%, rgba(163,230,53,.10), transparent),  /* lime glow */
-              var(--bg);
+        radial-gradient(1200px 800px at 10% -10%, rgba(16,185,129,.10), transparent),
+        radial-gradient(900px 600px at 110% 10%, rgba(163,230,53,.10), transparent),
+        var(--bg);
       color:var(--text);
+      -webkit-text-size-adjust:100%;
+      text-rendering:optimizeLegibility;
+      padding-top: env(safe-area-inset-top);
     }
-    .container{max-width:960px;margin:0 auto;padding:28px}
-    header{
-      position:sticky; top:0; backdrop-filter:saturate(140%) blur(8px);
-      background:linear-gradient(to bottom, var(--glass-top), transparent);
-      padding:12px 0; z-index:10; border-bottom:1px solid var(--border)
-    }
-    .nav{display:flex;align-items:center;gap:16px}
-    .brand{font-weight:700;letter-spacing:.3px}
-    .spacer{flex:1}
-    .btn, .chip, .link{border:1px solid var(--border); color:var(--text)}
-    .btn{padding:8px 12px;border-radius:12px;background:var(--card);cursor:pointer}
-    .btn:focus{outline:var(--ring)}
-    .chip{padding:6px 10px;border-radius:999px;font-size:.85rem;background:linear-gradient(180deg, rgba(255,255,255,.05), rgba(0,0,0,.05))}
-    .link{padding:6px 10px;border-radius:10px;text-decoration:none;display:inline-flex;align-items:center;gap:8px;background:var(--card)}
-    .grid{display:grid;grid-template-columns:1.2fr .8fr;gap:24px}
-    @media (max-width:860px){.grid{grid-template-columns:1fr}}
 
-    .card{background:linear-gradient(180deg, rgba(255,255,255,.04), rgba(0,0,0,.06));
-      border:1px solid var(--border); border-radius:18px; padding:20px; box-shadow:0 6px 18px rgba(0,0,0,.25)}
-    .card h2{margin:0 0 10px 0}
+    /* Skip link for keyboard users */
+    .skip-link{
+      position:absolute; left:-9999px; top:auto;
+    }
+    .skip-link:focus{
+      left: env(safe-area-inset-left); top: env(safe-area-inset-top);
+      background:var(--card); color:var(--text); padding:8px 12px; border-radius:10px; z-index:9999;
+      outline: var(--ring);
+    }
+
+    .container{max-width:960px;margin:0 auto;padding:var(--space-3)}
+    header{
+      position:sticky; top:0; z-index:10;
+      border-bottom:1px solid var(--border);
+      background: linear-gradient(to bottom, var(--glass-top), transparent);
+      padding-block: var(--space-1);
+    }
+    @supports (backdrop-filter: blur(8px)) {
+      header{ backdrop-filter: saturate(140%) blur(8px) }
+    }
+    @media (max-width:420px){
+      header{ backdrop-filter:none !important }
+    }
+
+    .nav{display:flex;align-items:center;gap:var(--space-2);flex-wrap:wrap}
+    .brand{font-weight:700;letter-spacing:.3px;font-size:var(--fs-2)}
+    .spacer{flex:1 1 auto;min-width:120px}
+
+    /* Buttons/links – touch-friendly */
+    .btn, .chip, .link{border:1px solid var(--border); color:var(--text)}
+    .btn{
+      padding:10px 14px; border-radius:12px; background:var(--card); cursor:pointer;
+      min-height:44px; min-width:44px; touch-action:manipulation;
+    }
+    .btn:focus-visible{ outline: var(--ring) }
+
+    .chip{
+      padding:8px 12px; border-radius:999px; font-size:.9rem;
+      background:linear-gradient(180deg, rgba(255,255,255,.05), rgba(0,0,0,.05));
+      min-height:36px;
+    }
+    .link{
+      padding:8px 12px; border-radius:10px; text-decoration:none; display:inline-flex; align-items:center; gap:8px; background:var(--card)
+    }
+
+    /* Filter: horizontally scrollable on phones */
+    .filter{
+      display:flex; gap:10px; flex-wrap:nowrap; overflow:auto; -webkit-overflow-scrolling:touch;
+      scrollbar-width:none; /* Firefox */
+    }
+    .filter::-webkit-scrollbar{ display:none } /* WebKit */
+    .filter > button{
+      appearance:none; border:1px solid var(--border); background:transparent; color:inherit; font:inherit;
+      padding:8px 12px; border-radius:999px; cursor:pointer; white-space:nowrap; min-height:40px;
+    }
+    .filter > button.active,
+    .filter > button[aria-pressed="true"]{
+      background:linear-gradient(180deg, var(--accent), var(--accent-2));
+      color:#0b110e; border-color:transparent
+    }
+
+    /* Grid: mobile-first 1 column → 2 columns at 900px */
+    .grid{
+      display:grid;
+      grid-template-columns: 1fr;
+      gap: var(--space-3);
+    }
+    @media (min-width: 900px){
+      .grid{ grid-template-columns: minmax(0,1.2fr) minmax(0,.8fr) }
+    }
+
+    .card{
+      background:linear-gradient(180deg, rgba(255,255,255,.04), rgba(0,0,0,.06));
+      border:1px solid var(--border); border-radius:var(--radius); padding:var(--space-3);
+      box-shadow:0 6px 18px rgba(0,0,0,.25)
+    }
+    .card h2{margin:0 0 var(--space-2) 0; font-size:var(--fs-2)}
     .muted{color:var(--muted)}
-    .hero{display:flex;align-items:center;gap:16px}
+    .hero{display:flex;align-items:center;gap:var(--space-2);flex-wrap:wrap}
     .avatar{
       width:56px;height:56px;border-radius:14px;
       background:linear-gradient(135deg,var(--accent),var(--accent-2));
@@ -70,308 +146,305 @@
     }
     .tags{display:flex;flex-wrap:wrap;gap:10px}
 
-    .post{padding:18px;border-radius:16px;border:1px solid var(--border); background:var(--card)}
-    .post h3{margin:0 0 6px 0}
-    .post .meta{font-size:.9rem;color:var(--muted);display:flex;gap:12px;align-items:center}
+    .post{padding:var(--space-3);border-radius:16px;border:1px solid var(--border); background:var(--card)}
+    .post h3{margin:0 0 6px 0; font-size:var(--fs-1)}
+    .post .meta{font-size:.9rem;color:var(--muted);display:flex;gap:12px;align-items:center;flex-wrap:wrap}
+    .post p{word-wrap:break-word; overflow-wrap:anywhere}
 
-    .list{display:grid;gap:14px}
+    .list{display:grid;gap:var(--space-2)}
     .kicker{color:var(--accent);font-weight:700;text-transform:uppercase;letter-spacing:.12em;font-size:.8rem}
-    .footer{margin:32px 0 12px;color:var(--muted);font-size:.9rem}
-    .filter{display:flex;gap:10px;flex-wrap:wrap}
-    .filter > button{
-      appearance: none;
-      border:1px solid var(--border);
-      background: transparent;
-      color: inherit;
-      font: inherit;
-      padding:6px 10px;
-      border-radius:999px;
-      cursor:pointer;
+    .footer{margin:32px 0 12px;color:var(--muted);font-size:.95rem}
+
+    /* Motion & contrast preferences */
+    @media (prefers-reduced-motion: reduce){
+      *{animation:none !important; transition:none !important}
     }
-    .filter > button.active{
-      background:linear-gradient(180deg, var(--accent), var(--accent-2));
-      color:#0b110e; border-color:transparent
-    }
-    code{background:rgba(255,255,255,.06);padding:2px 6px;border-radius:6px}
   </style>
 </head>
 <body>
-<header>
-  <div class="container nav">
-    <div class="brand" data-i18n="brand">🦥 SlothSec Log - myrian.ayala</div>
+  <a class="skip-link" href="#app">Skip to content</a>
 
-    <nav class="spacer filter" id="filterBar" aria-label="Category filter" data-i18n="filter.aria" data-i18n-attr="aria-label">
-      <!-- keep data-filter values stable (EN) so filtering logic works regardless of UI language -->
-      <button data-filter="all" class="active" data-i18n="filter.all">All</button>
-      <button data-filter="Traveling" data-i18n="filter.travel">Traveling</button>
-      <button data-filter="Hacking" data-i18n="filter.hacking">Infosec Insights</button>
-      <button data-filter="Financial Literacy" data-i18n="filter.finance">Financial Literacy</button>
-      <button data-filter="Relationships" data-i18n="filter.health">Overall Health</button>
-    </nav>
+  <header>
+    <div class="container nav">
+      <div class="brand" data-i18n="brand">🦥 SlothSec Log - myrian.ayala</div>
 
-    <!-- real buttons live OUTSIDE the .filter nav -->
-    <button class="btn" id="modeBtn" title="Toggle theme">☀️/🌙</button>
-    <button class="btn" id="langBtn" title="Cambiar idioma">EN</button>
-  </div>
-</header>
+      <nav class="spacer filter" id="filterBar" aria-label="Category filter" data-i18n="filter.aria" data-i18n-attr="aria-label">
+        <!-- keep data-filter values stable (EN) so filtering logic works regardless of UI language -->
+        <button data-filter="all" class="active" aria-pressed="true" data-i18n="filter.all">All</button>
+        <button data-filter="Traveling" aria-pressed="false" data-i18n="filter.travel">Traveling</button>
+        <button data-filter="Hacking" aria-pressed="false" data-i18n="filter.hacking">Infosec Insights</button>
+        <button data-filter="Financial Literacy" aria-pressed="false" data-i18n="filter.finance">Financial Literacy</button>
+        <button data-filter="Relationships" aria-pressed="false" data-i18n="filter.health">Overall Health</button>
+      </nav>
 
-<main class="container grid" id="app">
-  <section class="card">
-    <div class="hero">
-      <div class="avatar">MA</div>
-      <div>
-        <div class="kicker" data-i18n="welcome.kicker">Welcome</div>
-        <h1 style="margin:.2rem 0 0 0" data-i18n="welcome.title">Debugging Life</h1>
-        <p class="muted" data-i18n="welcome.tagline">
-          A collection of notes on  <strong>life</strong>, <strong>ethical hacking</strong>, <strong>travel</strong>, and everything in between. Made with curiosity, tereré, and a bit of code.
-        </p>
+      <!-- real buttons live OUTSIDE the .filter nav -->
+      <button class="btn" id="modeBtn" title="Toggle theme">☀️/🌙</button>
+      <button class="btn" id="langBtn" title="Cambiar idioma">EN</button>
+    </div>
+  </header>
+
+  <main class="container grid" id="app">
+    <section class="card">
+      <div class="hero">
+        <div class="avatar">MA</div>
+        <div>
+          <div class="kicker" data-i18n="welcome.kicker">Welcome</div>
+          <h1 style="margin:.2rem 0 0 0" data-i18n="welcome.title">Debugging Life</h1>
+          <p class="muted" data-i18n="welcome.tagline">
+            A collection of notes on  <strong>life</strong>, <strong>ethical hacking</strong>, <strong>travel</strong>, and everything in between. Made with curiosity, tereré, and a bit of code.
+          </p>
+        </div>
       </div>
-    </div>
-    <div style="height:12px"></div>
-    <div class="tags">
-      <span class="chip">NYC ✨</span>
-      <span class="chip">Cybersecurity 🔐</span>
-      <span class="chip">Traveling ✈️</span>
-      <span class="chip">Relationships 🤝️</span>
-    </div>
-  </section>
+      <div style="height:12px"></div>
+      <div class="tags">
+        <span class="chip">NYC ✨</span>
+        <span class="chip">Cybersecurity 🔐</span>
+        <span class="chip">Traveling ✈️</span>
+        <span class="chip">Relationships 🤝️</span>
+      </div>
+    </section>
 
-  <aside class="card">
-    <h2 data-i18n="about.title">About</h2>
-    <p data-i18n="about.body">Hola! I'm <strong>Myrian</strong> — a curious explorer who loves traveling, learning from people’s stories, breaking things (ethically), and seeks freedom in all forms. I see life through pronoia — trusting the universe’s kindness. Hope my notes spark something good in you. Thanks for visiting!</p>
-    <div style="height:8px"></div>
-    <a class="link" href="https://www.linkedin.com/in/myrian-ayala/" data-i18n="about.cta">↗ Connect on LinkedIn</a>
-  </aside>
+    <aside class="card">
+      <h2 data-i18n="about.title">About</h2>
+      <p data-i18n="about.body">Hola! I'm <strong>Myrian</strong> — a curious explorer who loves traveling, learning from people’s stories, breaking things (ethically), and seeks freedom in all forms. I see life through pronoia — trusting the universe’s kindness. Hope my notes spark something good in you. Thanks for visiting!</p>
+      <div style="height:8px"></div>
+      <a class="link" href="https://www.linkedin.com/in/myrian-ayala/" data-i18n="about.cta">↗ Connect on LinkedIn</a>
+    </aside>
 
-  <section class="card" style="grid-column:1 / -1">
-    <div class="kicker" data-i18n="latest.kicker">Latest</div>
-    <h2 style="margin:.2rem 0 1rem 0" data-i18n="latest.title">Posts</h2>
-    <div class="list" id="postList"></div>
-  </section>
+    <section class="card" style="grid-column:1 / -1">
+      <div class="kicker" data-i18n="latest.kicker">Latest</div>
+      <h2 style="margin:.2rem 0 1rem 0" data-i18n="latest.title">Posts</h2>
+      <div class="list" id="postList"></div>
+    </section>
 
-  <section class="card">
-    <h2 data-i18n="now.title">Now</h2>
-    <p class="muted" data-i18n="now.desc">Here’s a little preview of what I’ll be focusing on in the next few days as I get ready to share new blogs with you...</p>
-    <ul>
-      <p>Thank you for visiting! I'm currently working on refining the overall layout of this initiative. I truly appreciate your feedback and collaboration in making it possible. <br> <br>
-        ¡Gracias por visitar! Actualmente estoy trabajando en mejorar el diseño general de esta iniciativa. Aprecio mucho tus comentarios y colaboración para hacerla posible.</p>
-    </ul>
-  </section>
+    <section class="card">
+      <h2 data-i18n="now.title">Now</h2>
+      <p class="muted" data-i18n="now.desc">Here’s a little preview of what I’ll be focusing on in the next few days as I get ready to share new blogs with you...</p>
+      <ul>
+        <p>Thank you for visiting! I'm currently working on refining the overall layout of this initiative. I truly appreciate your feedback and collaboration in making it possible. <br> <br>
+          ¡Gracias por visitar! Actualmente estoy trabajando en mejorar el diseño general de esta iniciativa. Aprecio mucho tus comentarios y colaboración para hacerla posible.</p>
+      </ul>
+    </section>
 
-  <section class="card">
-    <h2 data-i18n="topics.title">Topics</h2>
-    <p class="muted" data-i18n="topics.desc">Browse by theme</p>
-    <div class="tags">
-      <span class="chip">Coming soon…</span>
-      <!--
-      <a href="https://http1mustdie.com/"> Understanding HTTP Request Smuggling Vulnerability.</a>
-       <span class="chip">Cheat-sheets</span>
-      <span class="chip">Budgeting</span>
-      <span class="chip">Reflections</span>
-    </div> -->
-  </section>
+    <section class="card">
+      <h2 data-i18n="topics.title">Topics</h2>
+      <p class="muted" data-i18n="topics.desc">Browse by theme</p>
+      <div class="tags">
+        <span class="chip">Coming soon…</span>
+        <!--
+        <a href="https://http1mustdie.com/"> Understanding HTTP Request Smuggling Vulnerability.</a>
+         <span class="chip">Cheat-sheets</span>
+        <span class="chip">Budgeting</span>
+        <span class="chip">Reflections</span>
+      </div> -->
+    </section>
 
-</main>
+  </main>
 
-<footer class="container footer">© <span id="year"></span> <span data-i18n="footer.name">Myrian Ayala</span>. <span data-i18n="footer.tag">Built with love.</span></footer>
+  <footer class="container footer">© <span id="year"></span> <span data-i18n="footer.name">Myrian Ayala</span>. <span data-i18n="footer.tag">Built with love.</span></footer>
 
-<script>
-  // --- Content model (you can add bilingual fields later) ---
-  const posts = [
-    {
-      title: "> echo \"Hello, world!\" — and welcome! 👋",
-      date: "2025-10-12",
-      category: "Relationships & Overall Health",
-      summary: "Launching a space to think out loud — where code meets curiosity, and lessons from the digital and human world intersect.",
-      href: "posts/hello-internet.html"
-    }
-    /*
-    ,{
-      title: "nmap notes: SYN scan & service discovery",
-      date: "2025-10-05",
-      category: "Hacking",
-      summary: "A concise guide to -sS, -sV, timing, and safe defaults for scoped testing.",
-      href: "posts/nmap-syn-scan-notes.html"
-    },
-    {
-      title: "6-month budget template (bi-weekly)",
-      date: "2025-09-30",
-      category: "Financial Literacy",
-      summary: "My spreadsheet for rent, savings (10%), and sinking funds.",
-      href: "posts/biweekly-budget-template.html"
-    },
-    {
-      title: "48 hours in San Francisco",
-      date: "2025-10-03",
-      category: "Traveling",
-      summary: "Bartlett St. base—coffee, hills, and sunset lines on the bay.",
-      href: "posts/48-hours-san-francisco.html"
-    }
-    */
-  ];
+  <script>
+    // --- Content model (you can add bilingual fields later) ---
+    const posts = [
+      {
+        title: "> echo \"Hello, world!\" — and welcome! 👋",
+        date: "2025-10-12",
+        category: "Relationships & Overall Health",
+        summary: "Launching a space to think out loud — where code meets curiosity, and lessons from the digital and human world intersect.",
+        href: "posts/hello-internet.html"
+      }
+      /*
+      ,{
+        title: "nmap notes: SYN scan & service discovery",
+        date: "2025-10-05",
+        category: "Hacking",
+        summary: "A concise guide to -sS, -sV, timing, and safe defaults for scoped testing.",
+        href: "posts/nmap-syn-scan-notes.html"
+      },
+      {
+        title: "6-month budget template (bi-weekly)",
+        date: "2025-09-30",
+        category: "Financial Literacy",
+        summary: "My spreadsheet for rent, savings (10%), and sinking funds.",
+        href: "posts/biweekly-budget-template.html"
+      },
+      {
+        title: "48 hours in San Francisco",
+        date: "2025-10-03",
+        category: "Traveling",
+        summary: "Bartlett St. base—coffee, hills, and sunset lines on the bay.",
+        href: "posts/48-hours-san-francisco.html"
+      }
+      */
+    ];
 
-  // --- Language dictionaries ---
-  const dict = {
-    en: {
-      brand: "🦥 SlothSec Log - myrian.ayala",
-      "filter.aria": "Category filter",
-      "filter.all": "All",
-      "filter.travel": "Traveling",
-      "filter.hacking": "Offensive Security",
-      "filter.finance": "Financial Literacy",
-      "filter.health": "Overall Health",
-      "welcome.kicker": "Welcome",
-      "welcome.title": "Debugging Life",
-      "welcome.tagline": "A collection of notes on <strong>life</strong>, <strong>ethical hacking</strong>, <strong>travel</strong>, and everything in between. Made with curiosity, tereré, and a bit of code.",
-      "about.title": "About",
-      "about.body": "Hola! I'm <strong>Myrian</strong> — a curious explorer who loves traveling, learning from people’s stories, breaking things (ethically), and seeks freedom in all forms. I see life through pronoia — trusting the universe’s kindness. Hope my notes spark something good in you. Thanks for visiting!",
-      "about.cta": "↗ Connect on LinkedIn",
-      "latest.kicker": "Latest",
-      "latest.title": "Posts",
-      "now.title": "Now",
-      "now.desc": "Here’s a little preview of what I’ll be focusing on in the next few days as I get ready to share new blogs with you...",
-      "topics.title": "Topics",
-      "topics.desc": "Browse by theme",
-      "footer.name": "Myrian Ayala",
-      "footer.tag": "Built with love."
-    },
-    es: {
-      brand: "🦥 SlothSec Log - myrian.ayala",
-      "filter.aria": "Filtro de categorías",
-      "filter.all": "Todo",
-      "filter.travel": "Viajes",
-      "filter.hacking": "Seguridad Ofensiva",
-      "filter.finance": "Educación financiera",
-      "filter.health": "Bienestar integral",
-      "welcome.kicker": "Bienvenid@",
-      "welcome.title": "Haciendo debug a la vida",
-      "welcome.tagline": "Una colección de notas sobre la <strong>vida</strong>, <strong>hackeo ético</strong>, <strong>viajes</strong> y todo lo demás. Hecho con curiosidad, tereré y un poco de código.",
-      "about.title": "Sobre mí",
-      "about.body": "Hola, Soy <strong>Myrian</strong>! una exploradora curiosa que ama viajar, aprender de las historias de las personas, romper cosas (de forma ética) y buscar la libertad en todas sus formas.  Me llamó la atención el concepto \"pronoia\": la creencia de que el universo conspira a nuestro favor y entonces decidí adoptarlo como forma de ver la vida. Ojalá mis notas te inspiren algo bueno. ¡Gracias por visitar!",
-      "about.cta": "↗ Conectar en LinkedIn",
-      "latest.kicker": "Lo último",
-      "latest.title": "Publicaciones",
-      "now.title": "Ahora",
-      "now.desc": "Un adelanto de lo que estaré enfocada en los próximos días mientras preparo nuevos blogs...",
-      "topics.title": "Temas",
-      "topics.desc": "Explora por categoría",
-      "footer.name": "Myrian Ayala",
-      "footer.tag": "Hecho con amor."
-    }
-  };
+    // --- Language dictionaries ---
+    const dict = {
+      en: {
+        brand: "🦥 SlothSec Log - myrian.ayala",
+        "filter.aria": "Category filter",
+        "filter.all": "All",
+        "filter.travel": "Traveling",
+        "filter.hacking": "Offensive Security",
+        "filter.finance": "Financial Literacy",
+        "filter.health": "Overall Health",
+        "welcome.kicker": "Welcome",
+        "welcome.title": "Debugging Life",
+        "welcome.tagline": "A collection of notes on <strong>life</strong>, <strong>ethical hacking</strong>, <strong>travel</strong>, and everything in between. Made with curiosity, tereré, and a bit of code.",
+        "about.title": "About",
+        "about.body": "Hola! I'm <strong>Myrian</strong> — a curious explorer who loves traveling, learning from people’s stories, breaking things (ethically), and seeks freedom in all forms. I see life through pronoia — trusting the universe’s kindness. Hope my notes spark something good in you. Thanks for visiting!",
+        "about.cta": "↗ Connect on LinkedIn",
+        "latest.kicker": "Latest",
+        "latest.title": "Posts",
+        "now.title": "Now",
+        "now.desc": "Here’s a little preview of what I’ll be focusing on in the next few days as I get ready to share new blogs with you...",
+        "topics.title": "Topics",
+        "topics.desc": "Browse by theme",
+        "footer.name": "Myrian Ayala",
+        "footer.tag": "Built with love."
+      },
+      es: {
+        brand: "🦥 SlothSec Log - myrian.ayala",
+        "filter.aria": "Filtro de categorías",
+        "filter.all": "Todo",
+        "filter.travel": "Viajes",
+        "filter.hacking": "Seguridad Ofensiva",
+        "filter.finance": "Educación financiera",
+        "filter.health": "Bienestar integral",
+        "welcome.kicker": "Bienvenid@",
+        "welcome.title": "Haciendo debug a la vida",
+        "welcome.tagline": "Una colección de notas sobre la <strong>vida</strong>, <strong>hackeo ético</strong>, <strong>viajes</strong> y todo lo demás. Hecho con curiosidad, tereré y un poco de código.",
+        "about.title": "Sobre mí",
+        "about.body": "Hola, Soy <strong>Myrian</strong>! una exploradora curiosa que ama viajar, aprender de las historias de las personas, romper cosas (de forma ética) y buscar la libertad en todas sus formas.  Me llamó la atención el concepto \"pronoia\": la creencia de que el universo conspira a nuestro favor y entonces decidí adoptarlo como forma de ver la vida. Ojalá mis notas te inspiren algo bueno. ¡Gracias por visitar!",
+        "about.cta": "↗ Conectar en LinkedIn",
+        "latest.kicker": "Lo último",
+        "latest.title": "Publicaciones",
+        "now.title": "Ahora",
+        "now.desc": "Un adelanto de lo que estaré enfocada en los próximos días mientras preparo nuevos blogs...",
+        "topics.title": "Temas",
+        "topics.desc": "Explora por categoría",
+        "footer.name": "Myrian Ayala",
+        "footer.tag": "Hecho con amor."
+      }
+    };
 
-  // Category label mapping (display only)
-  const catMap = {
-    en: {
-      "Relationships & Overall Health": "Relationships & Overall Health",
-      "Traveling": "Traveling",
-      "Hacking": "Infosec Insights",
-      "Financial Literacy": "Financial Literacy",
-      "Off the Records": "Off the Records"
-    },
-    es: {
-      "Relationships & Overall Health": "Relaciones y Bienestar",
-      "Traveling": "Viajes",
-      "Hacking": "Seguridad / Infosec",
-      "Financial Literacy": "Educación financiera",
-      "Off the Records": "Fuera de registro"
-    }
-  };
+    // Category label mapping (display only)
+    const catMap = {
+      en: {
+        "Relationships & Overall Health": "Relationships & Overall Health",
+        "Traveling": "Traveling",
+        "Hacking": "Infosec Insights",
+        "Financial Literacy": "Financial Literacy",
+        "Off the Records": "Off the Records"
+      },
+      es: {
+        "Relationships & Overall Health": "Relaciones y Bienestar",
+        "Traveling": "Viajes",
+        "Hacking": "Seguridad / Infosec",
+        "Financial Literacy": "Educación financiera",
+        "Off the Records": "Fuera de registro"
+      }
+    };
 
-  // --- Render posts (localized date + category; supports future bilingual fields) ---
-  const list = document.getElementById('postList');
-  window._currentFilter = 'all';
-  let currentLang = 'en';
+    // --- Render posts (localized date + category; supports future bilingual fields) ---
+    const list = document.getElementById('postList');
+    window._currentFilter = 'all';
+    let currentLang = 'en';
 
-  function render(filter = 'all'){
-    window._currentFilter = filter;
-    list.innerHTML = '';
-    posts
-            .filter(p => filter==='all' ? true : p.category === filter)
-            .sort((a,b)=> new Date(b.date) - new Date(a.date))
-            .forEach(p => {
-              const el = document.createElement('article');
-              el.className = 'post';
-              el.setAttribute('data-category', p.category);
+    function render(filter = 'all'){
+      window._currentFilter = filter;
+      list.innerHTML = '';
+      posts
+        .filter(p => filter==='all' ? true : p.category === filter)
+        .sort((a,b)=> new Date(b.date) - new Date(a.date))
+        .forEach(p => {
+          const el = document.createElement('article');
+          el.className = 'post';
+          el.setAttribute('data-category', p.category);
 
-              const dateStr = new Date(p.date).toLocaleDateString(currentLang === 'es' ? 'es' : 'en', {
-                year:'numeric', month:'short', day:'numeric'
-              });
-              const catLabel = (catMap[currentLang] && catMap[currentLang][p.category]) || p.category;
+          const dateStr = new Date(p.date).toLocaleDateString(currentLang === 'es' ? 'es' : 'en', {
+            year:'numeric', month:'short', day:'numeric'
+          });
+          const catLabel = (catMap[currentLang] && catMap[currentLang][p.category]) || p.category;
 
-              const title = (currentLang==='es' && p.title_es) ? p.title_es : p.title;
-              const summary = (currentLang==='es' && p.summary_es) ? p.summary_es : p.summary;
+          const title = (currentLang==='es' && p.title_es) ? p.title_es : p.title;
+          const summary = (currentLang==='es' && p.summary_es) ? p.summary_es : p.summary;
 
-              el.innerHTML = `
+          el.innerHTML = `
             <h3><a class="link" href="${p.href}">${title}</a></h3>
             <div class="meta"><span>${dateStr}</span> • <span>${catLabel}</span></div>
             <p class="muted">${summary}</p>
           `;
-              list.appendChild(el);
-            });
-  }
+          list.appendChild(el);
+        });
+    }
 
-  // --- Filter bar ---
-  const filterBar = document.getElementById('filterBar');
-  filterBar.addEventListener('click', (e)=>{
-    if(e.target.tagName !== 'BUTTON') return;
-    for(const b of filterBar.querySelectorAll('button')) b.classList.remove('active');
-    e.target.classList.add('active');
-    render(e.target.dataset.filter);
-  });
-
-  // --- Theme toggle ---
-  const modeBtn = document.getElementById('modeBtn');
-  function setMode(mode){
-    if(mode==='light'){ document.documentElement.classList.add('light'); }
-    else{ document.documentElement.classList.remove('light'); }
-    localStorage.setItem('mode', mode);
-    modeBtn.textContent = mode==='light' ? '🌙' : '☀️';
-  }
-  modeBtn.addEventListener('click', ()=>{
-    const current = localStorage.getItem('mode') || 'dark';
-    setMode(current==='dark' ? 'light' : 'dark');
-  });
-
-  // --- Language toggle ---
-  const langBtn = document.getElementById('langBtn');
-  function setLang(lang){
-    currentLang = (lang === 'es' ? 'es' : 'en');
-    localStorage.setItem('lang', currentLang);
-    document.documentElement.lang = currentLang;
-
-    // Replace text in elements with data-i18n (skip elements that ONLY set attributes)
-    document.querySelectorAll('[data-i18n]:not([data-i18n-attr])').forEach(el => {
-      const key = el.getAttribute('data-i18n');
-      const val = (dict[currentLang] && dict[currentLang][key]) || (dict.en[key]) || '';
-      if (val.includes('<') || val.includes('&')) el.innerHTML = val;
-      else el.textContent = val;
+    // --- Filter bar with aria-pressed handling ---
+    const filterBar = document.getElementById('filterBar');
+    filterBar.addEventListener('click', (e)=>{
+      if(e.target.tagName !== 'BUTTON') return;
+      for (const b of filterBar.querySelectorAll('button')) {
+        b.classList.remove('active');
+        b.setAttribute('aria-pressed','false');
+      }
+      e.target.classList.add('active');
+      e.target.setAttribute('aria-pressed','true');
+      render(e.target.dataset.filter);
     });
 
-    // Replace attributes via data-i18n-attr
-    document.querySelectorAll('[data-i18n-attr]').forEach(el => {
-      const attrName = el.getAttribute('data-i18n-attr'); // e.g., "aria-label" or "title"
-      const key = el.getAttribute('data-i18n');
-      const val = (dict[currentLang] && dict[currentLang][key]) || (dict.en[key]) || '';
-      el.setAttribute(attrName, val);
+    // --- Theme toggle ---
+    const modeBtn = document.getElementById('modeBtn');
+    function setMode(mode){
+      if(mode==='light'){ document.documentElement.classList.add('light'); }
+      else{ document.documentElement.classList.remove('light'); }
+      localStorage.setItem('mode', mode);
+      modeBtn.textContent = mode==='light' ? '🌙' : '☀️';
+    }
+    modeBtn.addEventListener('click', ()=>{
+      const current = localStorage.getItem('mode') || 'dark';
+      setMode(current==='dark' ? 'light' : 'dark');
     });
 
-    // Update button label + re-render posts with localized date/category
-    if (langBtn) langBtn.textContent = currentLang.toUpperCase();
-    render(window._currentFilter || 'all');
-  }
-  langBtn.addEventListener('click', ()=>{
-    setLang(currentLang === 'es' ? 'en' : 'es');
-  });
+    // --- Language toggle ---
+    const langBtn = document.getElementById('langBtn');
+    function setLang(lang){
+      currentLang = (lang === 'es' ? 'es' : 'en');
+      localStorage.setItem('lang', currentLang);
+      document.documentElement.lang = currentLang;
 
-  // --- Init ---
-  setMode(localStorage.getItem('mode') || (window.matchMedia('(prefers-color-scheme: light)').matches ? 'light':'dark'));
-  setLang(localStorage.getItem('lang') || ((navigator.language||'en').startsWith('es') ? 'es' : 'en'));
-  document.getElementById('year').textContent = new Date().getFullYear();
-  render();
-</script>
+      // Replace text in elements with data-i18n (skip elements that ONLY set attributes)
+      document.querySelectorAll('[data-i18n]:not([data-i18n-attr])').forEach(el => {
+        const key = el.getAttribute('data-i18n');
+        const val = (dict[currentLang] && dict[currentLang][key]) || (dict.en[key]) || '';
+        if (val.includes('<') || val.includes('&')) el.innerHTML = val;
+        else el.textContent = val;
+      });
+
+      // Replace attributes via data-i18n-attr
+      document.querySelectorAll('[data-i18n-attr]').forEach(el => {
+        const attrName = el.getAttribute('data-i18n-attr'); // e.g., "aria-label" or "title"
+        const key = el.getAttribute('data-i18n');
+        const val = (dict[currentLang] && dict[currentLang][key]) || (dict.en[key]) || '';
+        el.setAttribute(attrName, val);
+      });
+
+      // Update button label + re-render posts with localized date/category
+      if (langBtn) langBtn.textContent = currentLang.toUpperCase();
+      render(window._currentFilter || 'all');
+    }
+    langBtn.addEventListener('click', ()=>{
+      setLang(currentLang === 'es' ? 'en' : 'es');
+    });
+
+    // --- Init ---
+    setMode(localStorage.getItem('mode') || (window.matchMedia('(prefers-color-scheme: light)').matches ? 'light':'dark'));
+    setLang(localStorage.getItem('lang') || ((navigator.language||'en').startsWith('es') ? 'es' : 'en'));
+    document.getElementById('year').textContent = new Date().getFullYear();
+    render();
+  </script>
 </body>
 </html>
+
 
 
 
